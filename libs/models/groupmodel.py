@@ -47,6 +47,9 @@ class Group:
     def set_serial_number(self, serial_number):
         self.serial_number = serial_number
 
+    def get_classes(self):
+        return self.classes
+
     def set_classes(self, classes):
         self.classes = classes
 

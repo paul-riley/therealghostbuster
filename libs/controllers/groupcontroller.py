@@ -5,9 +5,7 @@
 # node Group controller
 # I'm not a fan of camel_case... but PEP 8 says do it this way
 
-from groupmodel import Group
-import sys, os, json, requests
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from .imports import *
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 #This is a double check... Thanks Python
 file_dir = os.path.dirname(__file__)
@@ -15,55 +13,38 @@ sys.path.append(file_dir)
 
 class Groupcontroller:
 
-    def __init__(self):
+    def __init__(self, c = Connection()):
         self.group_obj_list = []
-        self.headers = {}
-        self.__connection = 'https://master-server-name.puppet.com:4433'
-        self.__token = '<token>'
-
-
-    #returns void
-    def set_connection(self, connection = None, token = None):
-
-        if connection is not None:
-            self.__connection = connection
-        if token is not None:
-            self.__token = token
-
-        self.headers = {'Accept': '*/*',
-                        'Accept-Encoding': 'gzip,deflate,br',
-                        'Connection': 'keep-alive',
-                        'X-Authentication': self.__token,
-                        'Content-Type': 'application/json' }
-
+        self.connection = c
 
     #loads data in to node_obj_list
-    def get_groups(self):
+    def load_group_list(self):
         uri = '/classifier-api/v1/groups'
-        resp = requests.get(self.__connection + uri, verify=False, headers=self.headers)
+        if self.connection.get_url() is not None:
+          resp = requests.get(self.connection.get_url() + uri, verify=False, headers=self.connection.get_headers())
 
-        if resp.status_code == 200 :
-            # Apparently... the .json method creates lists that "look" like json
-            # This does not encode the json into strings correclty. Which is crap.
-            # because the method is called .json() why not call it .to_dictionary()?
-            # if you need to turn it in parseable json: json.loads(data.json()) :(
-            for single_item in resp.json():
-                group_obj = Group()
-                group_obj.parse(single_item)
-                self.group_obj_list.append(group_obj)
+          if resp.status_code == 200 :
+              # Apparently... the .json method creates lists that "look" like json
+              # This does not encode the json into strings correclty. Which is crap.
+              # because the method is called .json() why not call it .to_dictionary()?
+              # if you need to turn it in parseable json: json.loads(data.json()) :(
+              for single_item in resp.json():
+                  group_obj = Group()
+                  group_obj.parse(single_item)
+                  self.group_obj_list.append(group_obj)
 
-            #this is that stupid 'fake' json
-            return json.dumps(resp.json())
-            #return data.json()
+                  #this is that stupid 'fake' json
+                  #return json.dumps(resp.json())
+                  #print(resp.json())
+          else:
+              print('response code is not 200. connection:' + self.connection.get_url() )
 
-    def get_token_status(self):
-        uri = '/rbac-api/v2/auth/token/authenticate'
-        payload = json.dumps({'token':self.__token, 'update_last_activity?':False })
-        resp = requests.post(self.__connection + uri, verify=False, headers=self.headers, data=payload)
-        #if resp.status_code == 200 :
-        return json.dumps(resp.json())
-
-
+    #returns group list of type Group Objects
+    def get_group_list(self):
+        if self.group_obj_list:
+            return self.group_obj_list
+        else :
+            return None
 
     #returns a Node
     def create_group(self, name, description = None, parent_name = None, classes = None):
@@ -96,7 +77,7 @@ class Groupcontroller:
         uri = '/classifier-api/v1/groups'
         #serliaze into json
         jsondata = json.dumps(noderef.get_basic_group_dictionary())
-        resp = requests.post(self.__connection + uri, verify=False, headers=self.headers, data=jsondata)
+        resp = requests.post(self.connection.get_url() + uri, verify=False, headers=self.connection.get_headers(), data=jsondata)
 
         if resp.status_code == 201:
             #reload the groups into the model
