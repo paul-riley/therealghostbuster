@@ -19,7 +19,7 @@ if (url and token):
     used_class_list = []
     unused_class_list = []
 
-    print("\n\nThese are the used classes in PE\n\n")
+    print("\n\nThese are the group classes in PE,\n\n")
     grp_ref = Groupcontroller(c)
     grp_ref.load_group_list()
 
@@ -27,8 +27,11 @@ if (url and token):
         class_list = grp_obj.get_classes().keys()
         for item in class_list:
             used_class_list.append(item)
-            print(item)
+            print(grp_obj.get_name() + ',' + item)
 
-   #print("\n\nThese are all the known classes in PE\n\n")
+    print("\n\nThese are all the known classes in PE,\n\n")
+    class_ref = Puppetclasscontroller(c)
+    class_ref.load_api_classes()
 
-   #class_ref = Puppetclass(c)
+    for pe_class in class_ref.get_api_classes():
+        print(pe_class.get_name() + ',' + pe_class.get_environment() + ',' + pe_class.get_source() ) 

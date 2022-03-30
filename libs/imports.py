@@ -10,5 +10,5 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from .models.puppetclassmodel import Puppetclass
 from .models.connectionmodel import Connection
 from .models.groupmodel import Group
-#from .puppetclasscontroller import Puppetclasscontroller
 from .controllers.groupcontroller import Groupcontroller
+from .controllers.puppetclasscontroller import Puppetclasscontroller

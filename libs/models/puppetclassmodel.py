@@ -9,6 +9,7 @@ class Puppetclass:
 
         self.name = ""
         self.environment = ""
+        self.source = ""
         self.parameters = {}
 
     def get_environment(self):
@@ -22,6 +23,12 @@ class Puppetclass:
 
     def set_name(self, name):
         self.name = name
+
+    def get_source(self):
+        return self.source
+
+    def set_source(self, source):
+        self.source = source
 
     def get_parameters(self):
         return self.parameters
