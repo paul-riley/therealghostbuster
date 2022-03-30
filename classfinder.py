@@ -7,7 +7,7 @@
 from libs.imports import *
 
 #Add url and token
-url = input("Please enter your puppet server url (ex: puppetserver.example.com): ")
+url = input("\n\nPlease enter your puppet server url (ex: puppetserver.example.com): ")
 token = input("Please enter your admin api token: ")
 #unusedclass_bool = input(get_bool("Would you like to see the unused classes?"))
 
