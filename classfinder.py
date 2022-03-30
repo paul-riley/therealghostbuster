@@ -12,15 +12,20 @@ token = input("Please enter your admin api token: ")
 #unusedclass_bool = input(get_bool("Would you like to see the unused classes?"))
 
 if (url and token):
-    c = Connection()
-    c.set_url('https://' + url + ':4433')
-    c.set_token(token)
+    pe_conn = Connection()
+    pe_conn.set_url('https://' + url + ':4433')
+    pe_conn.set_token(token)
+
+    #put some logic in for different PDBs from PE. This will likely happen.
+    pdb_conn = Connection()
+    pdb_conn.set_url('https://' + url + ':8081')
+    pdb_conn.set_token(token)
 
     used_class_list = []
     unused_class_list = []
 
     print("\n\nThese are the group classes in PE,\n\n")
-    grp_ref = Groupcontroller(c)
+    grp_ref = Groupcontroller(pe_conn)
     grp_ref.load_group_list()
 
     for grp_obj in grp_ref.get_group_list():
@@ -30,7 +35,7 @@ if (url and token):
             print(grp_obj.get_name() + ',' + item)
 
     print("\n\nThese are all the known classes in PE,\n\n")
-    class_ref = Puppetclasscontroller(c)
+    class_ref = Puppetclasscontroller(pe_conn)
     class_ref.load_api_classes()
 
     for pe_class in class_ref.get_api_classes():
