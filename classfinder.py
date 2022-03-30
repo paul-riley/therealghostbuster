@@ -36,6 +36,8 @@ if (url and token):
     for pe_class in class_ref.get_api_classes():
         print(pe_class.get_name() + ',' + pe_class.get_environment() + ',' + pe_class.get_source() )
 
+    print("\n\n")
+
     #get list of nodes from puppetdb -> make a node model
 
     #take that list and get the resources for the node  -> make a resource model
