@@ -92,7 +92,7 @@ class Group:
     def set_description(self, desc_data):
         self.config_data = desc_data
 
-    def get_basic_group_dictionary(self):
+    def get_basic_dictionary(self):
         return {'parent': self.parent, 'name': self.name, 'classes': self.classes}
 
     def parse(self, dictionary_data):

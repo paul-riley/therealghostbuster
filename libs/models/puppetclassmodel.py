@@ -36,7 +36,7 @@ class Puppetclass:
     def set_parameters(self, parameters):
         self.parameters = parameters
 
-    def get_basic_class_dictionary(self):
+    def get_basic_dictionary(self):
         return {'name': self.name, 'environment': self.environment, 'parameters': self.classes}
 
     def parse(self, dictionary_data):
