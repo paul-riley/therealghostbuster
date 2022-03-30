@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 #
-# model for resource
+# model for a Node resource of type class 
 
 class Nodeclassresource:
 
