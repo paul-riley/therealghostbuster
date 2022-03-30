@@ -26,7 +26,7 @@ if (url and token):
     for grp_obj in grp_ref.get_group_list():
         class_list = grp_obj.get_classes().keys()
         for item in class_list:
-            used_class_list.append(item)
+            unused_class_list.append(item)
             print(grp_obj.get_name() + ',' + item)
 
     print("\n\nThese are all the known classes in PE,\n\n")
@@ -34,4 +34,13 @@ if (url and token):
     class_ref.load_api_classes()
 
     for pe_class in class_ref.get_api_classes():
-        print(pe_class.get_name() + ',' + pe_class.get_environment() + ',' + pe_class.get_source() ) 
+        print(pe_class.get_name() + ',' + pe_class.get_environment() + ',' + pe_class.get_source() )
+
+    #get list of nodes from puppetdb -> make a node model
+
+    #take that list and get the resources for the node  -> make a resource model
+
+    #check each resource for "type": "Class",
+    #                        "title": "Puppet_enterprise::Profile::Console::Proxy::Http_redirect",
+
+    #if the class is applied, mark it off as used pop it off into used_class_array
