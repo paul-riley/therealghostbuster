@@ -5,7 +5,7 @@
 # node Group controller
 # I'm not a fan of camel_case... but PEP 8 says do it this way
 
-from .imports import *
+from ..imports import *
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 #This is a double check... Thanks Python
 file_dir = os.path.dirname(__file__)

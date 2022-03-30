@@ -4,7 +4,7 @@
 #
 # Puppetclass controller
 
-from .imports import *
+from ..imports import *
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 #This is a double check... Thanks Python
