@@ -44,10 +44,17 @@ if (url and token):
     print("\n\n")
 
     #get list of nodes from puppetdb -> make a node model
+    node_ref = Nodecontroller(pdb_conn)
+    node_ref.load_all_nodes()
+    node_list = node_ref.get_all_nodes()
 
-    #take that list and get the resources for the node  -> make a resource model
+    for node_obj in node_list:
+        class_obj = Nodeclassresourcecontroller(pdb_conn)
+        class_obj.load_all_classes(node_obj)
+        node_class_list = class_obj.get_all_classes()
 
-    #check each resource for "type": "Class",
-    #                        "title": "Puppet_enterprise::Profile::Console::Proxy::Http_redirect",
+        print ("\n\nNode: " + node_obj.get_certname())
+        for node_class_obj in node_class_list:
+            print (node_class_obj.get_title())
 
     #if the class is applied, mark it off as used pop it off into used_class_array

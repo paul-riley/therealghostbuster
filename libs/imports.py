@@ -14,3 +14,5 @@ from .models.nodeclassresourcemodel import Nodeclassresource
 from .models.nodemodel import Node
 from .controllers.groupcontroller import Groupcontroller
 from .controllers.puppetclasscontroller import Puppetclasscontroller
+from .controllers.nodecontroller import Nodecontroller
+from .controllers.nodeclassresourcecontroller import Nodeclassresourcecontroller

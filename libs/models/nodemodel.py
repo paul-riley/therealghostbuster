@@ -12,12 +12,12 @@ class Node:
         self.facts_environment = ""
         self.cached_catalog_status = ""
         self.report_environment = ""
-        self.latest_report_corrective_change = false
+        self.latest_report_corrective_change = False
         self.catalog_environment = ""
         self.facts_timestamp = ""
-        self.latest_report_noop = false
+        self.latest_report_noop = False
         self.expired = ""
-        self.latest_report_noop_pending = false
+        self.latest_report_noop_pending = False
         self.report_timestamp = ""
         self.certname = ""
         self.catalog_timestamp = ""
