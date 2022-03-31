@@ -3,6 +3,7 @@
 #import my stuff
 import sys
 import os
+import re
 import json
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
