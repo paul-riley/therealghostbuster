@@ -31,6 +31,7 @@ if (url and token):
     grp_ref = Groupcontroller(pe_conn)
     grp_ref.load_group_list()
 
+    #Loop through group objects and spit out the classes
     for grp_obj in grp_ref.get_group_list():
         class_list = grp_obj.get_classes().keys()
         for item in class_list:
@@ -44,7 +45,8 @@ if (url and token):
 
     for pe_class in class_ref.get_api_classes():
         unused_class_name_list.append(pe_class.get_name())
-        print(pe_class.get_name() + ',' + pe_class.get_environment() + ',' + pe_class.get_source() )
+        if re.search('^pe_', pe_class.get_name()) and not re.search('^puppet_enterprise', pe_class.get_name()):
+            print(pe_class.get_name())
 
     print("\n\n")
 
