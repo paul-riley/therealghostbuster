@@ -27,9 +27,8 @@ class Nodeclassresourcecontroller:
                   class_obj = Nodeclassresource()
                   class_obj.parse(single_item)
                   #Apparently Settings is class name
-                  if class_obj.get_title() != 'Settings':
-                      if class_obj.get_title() != 'main':
-                          self.nodeclass_obj_list.append(class_obj)
+                  if class_obj.get_title() != 'Settings' and class_obj.get_title() != 'main':
+                      self.nodeclass_obj_list.append(class_obj)
           else:
               print('nodeclassresourcecontroller response code is not 200. connection:' + self.connection.get_url() )
         else:
