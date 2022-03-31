@@ -48,8 +48,6 @@ if (url and token):
         if re.search('^pe_', pe_class.get_name()) and not re.search('^puppet_enterprise', pe_class.get_name()):
             print(pe_class.get_name())
 
-    print("\n\n")
-
     #get list of nodes from puppetdb. pagination is not being used. i suspect
     #  that will need to be turned on to not slow down puppetdb.
     node_ref = Nodecontroller(pdb_conn)
