@@ -20,8 +20,13 @@ if (url and token):
 
     #put some logic in for different PDBs from PE. This will likely happen.
     pdb_conn = Connection()
-    pdb_conn.set_url('https://' + pdburl + ':8081')
+    if pdburl:
+        pdb_conn.set_url('https://' + pdburl + ':8081')
+    else:
+        pdb_conn.set_url('https://' + url + ':8081')
     pdb_conn.set_token(token)
+
+
 
     #list of strings for holding used and ununsed class lists.
     used_class_name_list = []
