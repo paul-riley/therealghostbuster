@@ -7,7 +7,8 @@
 from libs.imports import *
 
 #Add url and token
-url = input("\n\nPlease enter your puppet server url (ex: puppetserver.example.com): ")
+url = input("\n\nPlease enter your puppet server (ex: puppetserver.example.com): ")
+pdburl = input("\n\nPlease enter your pdb server (ex: pup-compiler.example.com): ")
 token = input("Please enter your admin api token: ")
 #unusedclass_bool = input(get_bool("Would you like to see the unused classes?"))
 
@@ -19,7 +20,7 @@ if (url and token):
 
     #put some logic in for different PDBs from PE. This will likely happen.
     pdb_conn = Connection()
-    pdb_conn.set_url('https://' + url + ':8081')
+    pdb_conn.set_url('https://' + pdburl + ':8081')
     pdb_conn.set_token(token)
 
     #list of strings for holding used and ununsed class lists.
