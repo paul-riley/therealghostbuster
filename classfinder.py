@@ -28,9 +28,9 @@ if (url and token):
 
 
 
-    #list of strings for holding used and ununsed class lists.
-    used_class_name_list = []
-    unused_class_name_list = []
+    #list of class objects for holding used and ununsed class lists.
+    used_class_obj_list = []
+    unused_class_obj_list = []
 
     #get the classes that are attached to groups.
     print("\n\nThese are the group classes in PE,\n")
@@ -50,7 +50,7 @@ if (url and token):
     class_ref.load_api_classes()
 
     for pe_class in class_ref.get_api_classes():
-        unused_class_name_list.append(pe_class.get_name())
+        unused_class_obj_list.append(pe_class)
         if re.search('^pe_', pe_class.get_name()) and not re.search('^puppet_enterprise', pe_class.get_name()):
             print(pe_class.get_name())
 
@@ -61,35 +61,50 @@ if (url and token):
     node_list = node_ref.get_all_nodes()
 
     #this goes through our node_list from above and gets the classes for that nodes
-    #  this going to need be thread on a per node basis because it does an api
+    #  this going to need be threaded on a per node basis because it does an api
     #  call for each node to get the list.
-    for node_obj in node_list:
-        class_obj = Nodeclassresourcecontroller(pdb_conn)
-        class_obj.load_all_classes(node_obj)
+    for single_node_obj in node_list:
+        #print ('checking node: ' + single_node_obj.get_certname())
+        node_resource_obj = Nodeclassresourcecontroller(pdb_conn)
+        node_resource_obj.load_all_classes(single_node_obj)
 
         #This is going to loop through the list of clases w/ a node and
         # move them from the unused array to the used class array.
         #print ("\n\nNode: " + node_obj.get_certname())
-        for node_class_obj in class_obj.get_all_classes():
+        for node_class_obj in node_resource_obj.get_all_classes():
             counter = 0
-            for single_class in unused_class_name_list:
-                #print("Comparing " + unused_class_obj.get_name().lower() + " to " + node_class_obj.get_title().lower() )
-                if single_class.lower().strip() == node_class_obj.get_title().lower().strip():
-                    unused_class_name_list.pop(counter)
-                    used_class_name_list.append(single_class)
+            for unused_class in unused_class_obj_list:
+                #print("Comparing " + unused_class.get_name().lower() + " to " + node_class_obj.get_title().lower() + " and " + \
+                #unused_class.get_environment() + " to " + node_class_obj.get_environment())
+                if ( (unused_class.get_name().lower().strip() == node_class_obj.get_title().lower().strip()) and \
+                (unused_class.get_environment() == node_class_obj.get_environment()) ):
+                    unused_class_obj_list.pop(counter)
+                    used_class_obj_list.append(unused_class)
                 counter+=1
 
-            #print (node_class_obj.get_title())
+    #I should probably pop stuff out of the array to clear the ram... meh.
 
+    #Used classes.
+    used_class_string_array = []
     print("\n\nThese are the used classes:\n")
-    for item in used_class_name_list:
-        if not re.search('^pe_', item) and not re.search('^puppet_enterprise', item):
-            print(item)
+    for class_obj in used_class_obj_list:
+        if not re.search('^pe_', class_obj.get_name()) and not re.search('^puppet_enterprise', class_obj.get_name()):
+            #print('Environment: ' + class_obj.get_environment() + ', Used Class: ' + class_obj.get_name())
+            used_class_string_array.append(class_obj.get_environment() + ',' + class_obj.get_name())
+    used_class_string_array.sort()
+    for str_item in used_class_string_array:
+        print(str_item)
 
+    #Unused Items
+    unused_class_string_array = []
     print("\n\nThese are the unused classes:\n")
-    for item in unused_class_name_list:
-        if not re.search('^pe_', item) and not re.search('^puppet_enterprise', item):
-            print(item)
+    for class_obj in unused_class_obj_list:
+        if not re.search('^pe_', class_obj.get_name()) and not re.search('^puppet_enterprise', class_obj.get_name()):
+            #print('Environment: ' + class_obj.get_environment() + ', Unused Class: ' + class_obj.get_name())
+            unused_class_string_array.append(class_obj.get_environment() + ',' + class_obj.get_name())
+    unused_class_string_array.sort()
+    for str_item in unused_class_string_array:
+        print(str_item)
 
     print("\n\n")
     #Fin
