@@ -29,7 +29,7 @@ if (url and filename):
     if (token):
         pdb_conn.set_token(token)
     else:
-        f = open(''/root/.puppetlabs/token', 'r')
+        f = open('/root/.puppetlabs/token', 'r')
         pdb_conn.set_token(f.read())
         f.close()
 
