@@ -8,12 +8,13 @@ from libs.imports import *
 
 #Add url and token
 url = input("\n\nPlease enter your puppet server (ex: puppetserver.example.com): ")
-pdburl = input("\n\nPlease enter your pdb server (ex: pup-compiler.example.com): ")
-token = input("Please enter your admin api token: ")
+pdburl = input("\n\n[Optional] Please enter your pdb server (ex: pup-compiler.example.com): ")
+token = input("\n\n[Optional] Please enter your admin api token: ")
+filename = input("\n\nPlease enter the full name of the file to store the output: ")
 #unusedclass_bool = input(get_bool("Would you like to see the unused classes?"))
 
 #make sure that we setup the url and token
-if (url and token):
+if (url and filename):
     pe_conn = Connection()
     pe_conn.set_url('https://' + url + ':4433')
     pe_conn.set_token(token)
@@ -24,9 +25,16 @@ if (url and token):
         pdb_conn.set_url('https://' + pdburl + ':8081')
     else:
         pdb_conn.set_url('https://' + url + ':8081')
-    pdb_conn.set_token(token)
+
+    if (token):
+        pdb_conn.set_token(token)
+    else:
+        f = open(''/root/.puppetlabs/token', 'r')
+        pdb_conn.set_token(f.read())
+        f.close()
 
 
+    f = open(filename, 'a')
 
     #list of class objects for holding used and ununsed class lists.
     used_class_obj_list = []
@@ -34,6 +42,7 @@ if (url and token):
 
     #get the classes that are attached to groups.
     print("\n\nThese are the group classes in PE,\n")
+    f.write("These are group classes in PE,\n")
     grp_ref = Groupcontroller(pe_conn)
     grp_ref.load_group_list()
 
@@ -41,11 +50,12 @@ if (url and token):
     for grp_obj in grp_ref.get_group_list():
         class_list = grp_obj.get_classes().keys()
         for item in class_list:
-            #unused_class_list.append(item)
             print(grp_obj.get_name() + ',' + item)
+            f.write(grp_obj.get_name() + ',' + item + "\n")
 
     #get all the classes from PE.
     print("\n\nThese are all the known classes in PE,\n")
+    f.write("These are all the known classes in PE,\n")
     class_ref = Puppetclasscontroller(pe_conn)
     class_ref.load_api_classes()
 
@@ -53,6 +63,7 @@ if (url and token):
         unused_class_obj_list.append(pe_class)
         if re.search('^pe_', pe_class.get_name()) and not re.search('^puppet_enterprise', pe_class.get_name()):
             print(pe_class.get_name())
+            f.write(pe_class.get_name() + "\n")
 
     #get list of nodes from puppetdb. pagination is not being used. i suspect
     #  that will need to be turned on to not slow down puppetdb.
@@ -64,18 +75,14 @@ if (url and token):
     #  this going to need be threaded on a per node basis because it does an api
     #  call for each node to get the list.
     for single_node_obj in node_list:
-        #print ('checking node: ' + single_node_obj.get_certname())
         node_resource_obj = Nodeclassresourcecontroller(pdb_conn)
         node_resource_obj.load_all_classes(single_node_obj)
 
         #This is going to loop through the list of clases w/ a node and
         # move them from the unused array to the used class array.
-        #print ("\n\nNode: " + node_obj.get_certname())
         for node_class_obj in node_resource_obj.get_all_classes():
             counter = 0
             for unused_class in unused_class_obj_list:
-                #print("Comparing " + unused_class.get_name().lower() + " to " + node_class_obj.get_title().lower() + " and " + \
-                #unused_class.get_environment() + " to " + node_class_obj.get_environment())
                 if ( (unused_class.get_name().lower().strip() == node_class_obj.get_title().lower().strip()) and \
                 (unused_class.get_environment() == node_class_obj.get_environment()) ):
                     unused_class_obj_list.pop(counter)
@@ -87,24 +94,28 @@ if (url and token):
     #Used classes.
     used_class_string_array = []
     print("\n\nThese are the used classes:\n")
+    f.write("These are the used classes:\n")
     for class_obj in used_class_obj_list:
         if not re.search('^pe_', class_obj.get_name()) and not re.search('^puppet_enterprise', class_obj.get_name()):
-            #print('Environment: ' + class_obj.get_environment() + ', Used Class: ' + class_obj.get_name())
             used_class_string_array.append(class_obj.get_environment() + ',' + class_obj.get_name())
     used_class_string_array.sort()
     for str_item in used_class_string_array:
         print(str_item)
+        f.write(str_item + "\n")
 
     #Unused Items
     unused_class_string_array = []
     print("\n\nThese are the unused classes:\n")
+    f.write("These are the unused classes:\n")
     for class_obj in unused_class_obj_list:
         if not re.search('^pe_', class_obj.get_name()) and not re.search('^puppet_enterprise', class_obj.get_name()):
-            #print('Environment: ' + class_obj.get_environment() + ', Unused Class: ' + class_obj.get_name())
             unused_class_string_array.append(class_obj.get_environment() + ',' + class_obj.get_name())
     unused_class_string_array.sort()
     for str_item in unused_class_string_array:
         print(str_item)
+        f.write(str_item + "\n")
 
     print("\n\n")
+    f.write("\n\n")
+    f.close()
     #Fin
