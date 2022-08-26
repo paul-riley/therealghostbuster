@@ -9,8 +9,8 @@ from libs.imports import *
 #Add url and token
 url = input("\n\nPlease enter your puppet server (ex: puppetserver.example.com): ")
 pdburl = input("\n\n[Optional] Please enter your pdb server (ex: pup-compiler.example.com): ")
-token = input("\n\n[Optional] Please enter your admin api token: ")
-filename = input("\n\nPlease enter the full name of the file to store the output: ")
+token = input("\n\nPlease enter your admin api token: ")
+filename = input("\n\nPlease enter the full name of the CSV file to store the output: ")
 #unusedclass_bool = input(get_bool("Would you like to see the unused classes?"))
 
 #make sure that we setup the url and token
