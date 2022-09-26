@@ -30,7 +30,7 @@ if (url and filename):
         pdb_conn.set_token(token)
     else:
         f = open('/root/.puppetlabs/token', 'r')
-        pdb_conn.set_token(f.read())
+        pdb_conn.set_token(f.read().rstrip)
         f.close()
 
 
