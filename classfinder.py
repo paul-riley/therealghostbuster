@@ -10,10 +10,10 @@ url_default = 'localhost'
 filename_default = 'output.csv'
 
 #Add url and token
-url = input("\n\nPlease enter your puppet server (ex: puppetserver.example.com, default: 'localhost'): ") or url_default
+url = input("\n\n[Optional] Please enter your puppet server (ex: puppetserver.example.com, default: 'localhost'): ") or url_default
 pdburl = input("\n\n[Optional] Please enter your pdb server (ex: pup-compiler.example.com): ")
 token = input("\n\nPlease enter your admin api token: ")
-filename = input("\n\nPlease enter the full name of the CSV file to store the output (default: 'output.csv'): ") or filename_default
+filename = input("\n\n[Optional] Please enter the full name of the CSV file to store the output (default: 'output.csv'): ") or filename_default
 
 
 
