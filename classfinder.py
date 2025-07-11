@@ -33,7 +33,7 @@ if (url and filename):
     if (token):
         pdb_conn.set_token(token)
     else:
-      print("\n\nPlease use an appropriate token. Thank you!\n\n")
+      print("\n\nPlease use an appropriate token. Thank you!")
       exit(1)
 
 
