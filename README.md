@@ -47,9 +47,9 @@ This project is licensed under the MIT license.
 
 ## Contributes and Derivatives
 
-Derivatives (copying the API models or controllers) are welcome! Please attempt to reference this project in your project or application in those scenarios.
+Derivatives (copying the API models or controllers) are welcome; please attempt to reference this project in your project or application in those scenarios.
 
-Pull requests are welcome! Please open issues for suggestions or bugs.
+Pull requests are encouraged! Please open issues for suggestions or bugs.
 
 ## Author
 
