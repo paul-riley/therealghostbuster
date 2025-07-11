@@ -1,6 +1,8 @@
-# ClassFinder
+# The REAL Ghostbuster
 
-ClassFinder is a Python application designed to locate the code that is in use for Puppet Enterprise. 
+The REAL Ghostbuster is a Python application designed to locate the code that is in use for Puppet Enterprise.
+
+It was developed due to Ruby, Gem, and API issues related to the original Ghostbuster application. Those may have since been resolved.
 
 ## Features
 
@@ -16,8 +18,8 @@ ClassFinder is a Python application designed to locate the code that is in use f
 Clone the repository and ensure you have Python 3.6+ installed.
 
 ```bash
-git clone https://github.com/yourusername/classfinder.git
-cd classfinder
+git clone https://github.com/paul-riley/therealghostbuster.git
+cd therealghostbuster
 ```
 
 ## Usage
