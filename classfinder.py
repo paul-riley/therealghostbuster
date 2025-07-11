@@ -6,16 +6,16 @@
 #
 from libs.imports import *
 
+url = 'localhost'
+filename = 'realghostbusteroutput.csv'
+
 #Add url and token
-url = input("\n\nPlease enter your puppet server (ex: puppetserver.example.com): ")
+url = input("\n\nPlease enter your puppet server (ex: puppetserver.example.com, default: 'localhost'): ")
 pdburl = input("\n\n[Optional] Please enter your pdb server (ex: pup-compiler.example.com): ")
 token = input("\n\nPlease enter your admin api token: ")
 filename = input("\n\nPlease enter the full name of the CSV file to store the output: ")
-#unusedclass_bool = input(get_bool("Would you like to see the unused classes?"))
 
-if not url:
-    print("\n\nPlease set the url ")
-    exit(1)
+
 
 #make sure that we setup the url and token
 if (url and filename):
@@ -32,10 +32,6 @@ if (url and filename):
 
     if (token):
         pdb_conn.set_token(token)
-    # else:
-    #     f = open('/root/.puppetlabs/token', 'r')
-    #     pdb_conn.set_token(f.read().rstrip)
-    #     f.close()
     else:
       print("\n\nPlease use an appropriate token. Thank you!\n\n")
       exit(1)
