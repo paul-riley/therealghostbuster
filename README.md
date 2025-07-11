@@ -28,6 +28,12 @@ Run the application from the command line:
 python3 classfinder.py
 ```
 
+or
+
+```bash
+./classfinder.py
+```
+
 ## Output
 
 The application prints a list of found group classes, known classes, used classes, and unused classes associated with the features above.
