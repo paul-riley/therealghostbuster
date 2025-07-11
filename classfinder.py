@@ -7,13 +7,13 @@
 from libs.imports import *
 
 url_default = 'localhost'
-filename_default = 'realghostbusteroutput.csv'
+filename_default = 'output.csv'
 
 #Add url and token
 url = input("\n\nPlease enter your puppet server (ex: puppetserver.example.com, default: 'localhost'): ") or url_default
 pdburl = input("\n\n[Optional] Please enter your pdb server (ex: pup-compiler.example.com): ")
 token = input("\n\nPlease enter your admin api token: ")
-filename = input("\n\nPlease enter the full name of the CSV file to store the output: ") or filename_default
+filename = input("\n\nPlease enter the full name of the CSV file to store the output (default: 'output.csv'): ") or filename_default
 
 
 
