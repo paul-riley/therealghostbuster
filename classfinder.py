@@ -13,6 +13,10 @@ token = input("\n\nPlease enter your admin api token: ")
 filename = input("\n\nPlease enter the full name of the CSV file to store the output: ")
 #unusedclass_bool = input(get_bool("Would you like to see the unused classes?"))
 
+if not url:
+    print("\n\nPlease set the url ")
+    exit(1)
+
 #make sure that we setup the url and token
 if (url and filename):
     pe_conn = Connection()
