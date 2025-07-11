@@ -8,10 +8,16 @@ It was developed due to Ruby, Gem, and API issues related to the original Ghostb
 
 - Retrieves a list of groups with classes in the UI classifer, nodes, and classes
 - Recursively goes through the nodes to retrieve the classes applied
-- Removes the 
+- Creates a list of classes for the UI groups, all system classes, used classes, and unused classes
 - Simple command-line interface
 - Uses a model, view, controller design for easy modifications
 - Single threaded to ensure it doesn't cause issues with Puppet Enterprise
+
+## Limitations
+
+- Output is written to the directory where the application exists
+- Output is long, lacks pretty formatting, and is a CSV
+- Output is meant to be interpreted by a third-party tool (vim, Microsoft Excel, Google Sheets, etc.)
 
 ## Installation
 
