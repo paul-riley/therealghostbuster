@@ -2,7 +2,7 @@
 
 The REAL Ghostbuster is a Python application designed to locate the code that is in use for Puppet Enterprise.
 
-It was developed due to Ruby, Gem, and API issues related to the original Ghostbuster application. Those may have since been resolved.
+It was developed due to Ruby, Gem, and API issues related to the original Ghostbuster application. Those may have since been resolved since the original application release.
 
 ## Features
 
@@ -43,9 +43,11 @@ The application prints a list of found group classes, known classes, used classe
 
 ## License
 
-This project is licensed under the GPLv2 license.
+This project is licensed under the MIT license.
 
-## Contributing
+## Contributes and Derivatives
+
+Derivatives (copying the API models or controllers) are welcome! Please reference this project in those scenarios.
 
 Pull requests are welcome! Please open issues for suggestions or bugs.
 
