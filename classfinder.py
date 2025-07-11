@@ -28,10 +28,13 @@ if (url and filename):
 
     if (token):
         pdb_conn.set_token(token)
+    # else:
+    #     f = open('/root/.puppetlabs/token', 'r')
+    #     pdb_conn.set_token(f.read().rstrip)
+    #     f.close()
     else:
-        f = open('/root/.puppetlabs/token', 'r')
-        pdb_conn.set_token(f.read().rstrip)
-        f.close()
+      print("\n\nPlease use an appropriate token. Thank you!\n\n")
+      exit(1)
 
 
     f = open(filename, 'a')
