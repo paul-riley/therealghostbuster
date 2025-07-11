@@ -24,14 +24,15 @@ cd classfinder
 
 Run the application from the command line:
 
+
 ```bash
-python3 classfinder.py
+./classfinder.py
 ```
 
 or
 
 ```bash
-./classfinder.py
+python3 classfinder.py
 ```
 
 ## Output
