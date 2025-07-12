@@ -39,9 +39,14 @@ if (url and filename):
 
     f = open(filename, 'a')
 
-    #list of class objects for holding used and ununsed class lists.
+    #list of class objects for holding used and unused class lists.
     used_class_obj_list = []
     unused_class_obj_list = []
+    #list of string names for holding used and unused classes
+    used_class_string_array = []
+    unused_class_string_array = []
+    #cleaned up string names of unused classes
+    unused_class_string_array_clean = []
 
     #get the classes that are attached to groups.
     print("\n\nThese are the group classes in the PE classifier,\n")
@@ -81,6 +86,8 @@ if (url and filename):
         node_resource_obj = Nodeclassresourcecontroller(pdb_conn)
         node_resource_obj.load_all_classes(single_node_obj)
 
+        print('Processing classes in node: ' + single_node_obj.get_certname())
+
         #This is going to loop through the list of clases w/ a node and
         # move them from the unused array to the used class array.
         for node_class_obj in node_resource_obj.get_all_classes():
@@ -88,35 +95,46 @@ if (url and filename):
             for unused_class in unused_class_obj_list:
                 if ( (unused_class.get_name().lower().strip() == node_class_obj.get_title().lower().strip()) and \
                 (unused_class.get_environment() == node_class_obj.get_environment()) ):
+                    
                     unused_class_obj_list.pop(counter)
                     used_class_obj_list.append(unused_class)
+
                 counter+=1
 
-    #I should probably pop stuff out of the array to clear the ram... meh.
+    # This should be reworked to be cleaner. I'm creating another array.
 
-    #Used classes.
-    used_class_string_array = []
-    print("\n\nThese are the used classes:\n")
+    # print("\n\nThese are the used classes:\n")
     f.write("These are the used classes:\n")
     for class_obj in used_class_obj_list:
         if not re.search('^pe_', class_obj.get_name()) and not re.search('^puppet_enterprise', class_obj.get_name()):
             used_class_string_array.append(class_obj.get_environment() + ',' + class_obj.get_name())
+
     used_class_string_array.sort()
     for str_item in used_class_string_array:
-        print(str_item)
+        # print(str_item)
         f.write(str_item + "\n")
 
-    #Unused Items
-    unused_class_string_array = []
-    print("\n\nThese are the unused classes:\n")
+
+    # print("\n\nThese are the unused classes:\n")
     f.write("These are the unused classes:\n")
     for class_obj in unused_class_obj_list:
         if not re.search('^pe_', class_obj.get_name()) and not re.search('^puppet_enterprise', class_obj.get_name()):
             unused_class_string_array.append(class_obj.get_environment() + ',' + class_obj.get_name())
     unused_class_string_array.sort()
     for str_item in unused_class_string_array:
-        print(str_item)
+        # print(str_item)
         f.write(str_item + "\n")
+
+    #clean sort for used and unused classes
+    for used_class_string in used_class_string_array:
+        for unused_class_string in unused_class_string_array:
+            # need to do a search for the first pattern of used strings against the unused
+            # look into quick sort
+            # if the pattern matches, add it to the clean array
+            #if re.search('^')
+
+    #remove duplicates from used_clean_array, write.
+
 
     print("\n\n")
     f.write("\n\n")
