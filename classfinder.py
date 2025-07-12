@@ -44,8 +44,8 @@ if (url and filename):
     unused_class_obj_list = []
 
     #get the classes that are attached to groups.
-    print("\n\nThese are the group classes in PE,\n")
-    f.write("These are group classes in PE,\n")
+    print("\n\nThese are the group classes in the PE classifier,\n")
+    f.write("These are group classes in the PE classifier,\n")
     grp_ref = Groupcontroller(pe_conn)
     grp_ref.load_group_list()
 
