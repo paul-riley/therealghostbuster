@@ -50,7 +50,6 @@ if (url and filename):
 
     #get the classes that are attached to groups.
     print("\n\nThese are the group classes in the PE classifier,\n")
-    f.write("These are group classes in the PE classifier,\n")
     grp_ref = Groupcontroller(pe_conn)
     grp_ref.load_group_list()
 
@@ -58,20 +57,19 @@ if (url and filename):
     for grp_obj in grp_ref.get_group_list():
         class_list = grp_obj.get_classes().keys()
         for item in class_list:
-            print(grp_obj.get_name() + ',' + item)
-            f.write(grp_obj.get_name() + ',' + item + "\n")
+            print('group class: ' + grp_obj.get_name() + ',' + item)
+            f.write('group class,' + grp_obj.get_name() + ',' + item + "\n")
 
     #get all the classes from PE.
     print("\n\nThese are all the known classes in PE,\n")
-    f.write("These are all the known classes in PE,\n")
     class_ref = Puppetclasscontroller(pe_conn)
     class_ref.load_api_classes()
 
     for pe_class in class_ref.get_api_classes():
         unused_class_obj_list.append(pe_class)
         if re.search('^pe_', pe_class.get_name()) and not re.search('^puppet_enterprise', pe_class.get_name()):
-            print(pe_class.get_name())
-            f.write(pe_class.get_name() + "\n")
+            print('known class: ' + pe_class.get_name())
+            f.write('known class,' + pe_class.get_name() + "\n")
 
     #get list of nodes from puppetdb. pagination is not being used. i suspect
     #  that will need to be turned on to not slow down puppetdb.
@@ -103,23 +101,18 @@ if (url and filename):
 
     # This should be reworked to be cleaner. I'm creating another array.
 
-    # print("\n\nThese are the used classes:\n")
-    f.write("These are the used classes:\n")
     for class_obj in used_class_obj_list:
         if not re.search('^pe_', class_obj.get_name()) and not re.search('^puppet_enterprise', class_obj.get_name()):
-            used_class_string_array.append(class_obj.get_environment() + ',' + class_obj.get_name())
+            used_class_string_array.append('used class,' + class_obj.get_environment() + ',' + class_obj.get_name())
 
     used_class_string_array.sort()
     for str_item in used_class_string_array:
-        # print(str_item)
         f.write(str_item + "\n")
 
 
-    # print("\n\nThese are the unused classes:\n")
-    f.write("These are the unused classes:\n")
     for class_obj in unused_class_obj_list:
         if not re.search('^pe_', class_obj.get_name()) and not re.search('^puppet_enterprise', class_obj.get_name()):
-            unused_class_string_array.append(class_obj.get_environment() + ',' + class_obj.get_name())
+            unused_class_string_array.append('unused class,' + class_obj.get_environment() + ',' + class_obj.get_name())
     unused_class_string_array.sort()
     for str_item in unused_class_string_array:
         # print(str_item)
