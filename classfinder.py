@@ -125,9 +125,9 @@ if (url and filename):
         # print(str_item)
         f.write(str_item + "\n")
 
-    #clean sort for used and unused classes
-    for used_class_string in used_class_string_array:
-        for unused_class_string in unused_class_string_array:
+    # #clean sort for used and unused classes
+    # for used_class_string in used_class_string_array:
+    #     for unused_class_string in unused_class_string_array:
             # need to do a search for the first pattern of used strings against the unused
             # look into quick sort
             # if the pattern matches, add it to the clean array
