@@ -80,6 +80,8 @@ if (url and filename):
     #this goes through our node_list from above and gets the classes for that nodes
     #  this going to need be threaded on a per node basis because it does an api
     #  call for each node to get the list.
+    print("\n\nProcessing nodes\n\n")
+
     for single_node_obj in node_list:
         node_resource_obj = Nodeclassresourcecontroller(pdb_conn)
         node_resource_obj.load_all_classes(single_node_obj)
