@@ -132,6 +132,6 @@ if (url and filename):
 
 
     print("\n\n")
-    f.write("\n\n")
+    f.write("\n")
     f.close()
     #Fin
